@@ -38,7 +38,7 @@ function home() {
   return `${status()}<section class="card hero-card"><p class="eyebrow">${today ? 'En ruta' : 'China → Indonesia'}</p><h2>${headline}</h2><p>${today ? `Es ${formatDate(today.date)}. Aquí tienes las próximas paradas.` : `22 días de ciudades, montañas, arrozales y mar.`}</p>${action}</section><section><h2 class="section-title">Próximamente</h2><ol class="quick-list">${preview}</ol></section><section class="card"><h2 class="card-title">Tu compañero, incluso sin red</h2><p class="muted">Guarda la app. Las notas, favoritos y checklist se quedan solo en este navegador.</p><a class="button-link button--light" href="#/kit">Abrir Kit de viaje</a></section>`;
 }
 
-function route() {
+function routeView() {
   const groups = [['China', DAYS.filter(day => day.country === 'china')], ['Indonesia', DAYS.filter(day => day.country === 'indonesia')]];
   return `${status()}<h2 class="section-title">La ruta</h2><p class="muted route-intro">Toda la luna de miel, día a día. Toca una parada para abrir su guía.</p>${groups.map(([name, days]) => `<section class="route-group"><h3>${name}</h3>${days.map(day => { const stay = stayFor(day.stay); return `<a class="route-day" href="${dayHref(day.date)}"><time>${new Date(`${day.date}T12:00:00`).toLocaleDateString('es-ES',{day:'numeric',month:'short'})}</time><span><strong>${escape(day.city)}</strong><small>${escape(day.type)}${stay ? ` · ${escape(stay.name)}` : ''}</small></span><b aria-hidden="true">›</b></a>`; }).join('')}</section>`).join('')}`;
 }
@@ -65,11 +65,13 @@ function kit() {
 }
 
 function render() {
-  const route = parseRoute();
-  if (route.invalid) location.hash = routeHref('home');
-  const active = route.invalid ? 'home' : route.name === 'day' ? '' : route.name;
+  const currentRoute = parseRoute();
+  if (currentRoute.invalid) location.hash = routeHref('home');
+  const actualDay = tripDayForToday();
+  if (currentRoute.name === 'home' && actualDay) { location.hash = dayHref(actualDay.date); return; }
+  const active = currentRoute.invalid ? 'home' : currentRoute.name === 'day' ? '' : currentRoute.name;
   nav.querySelectorAll('a').forEach(link => link.toggleAttribute('aria-current', link.dataset.nav === active));
-  shell.innerHTML = route.name === 'route' ? route() : route.name === 'kit' ? kit() : route.name === 'day' ? dayView(route.date) : home();
+  shell.innerHTML = currentRoute.name === 'route' ? routeView() : currentRoute.name === 'kit' ? kit() : currentRoute.name === 'day' ? dayView(currentRoute.date) : home();
 }
 
 shell.addEventListener('click', async event => {

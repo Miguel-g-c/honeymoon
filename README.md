@@ -10,6 +10,10 @@ Ejecuta `python3 -m http.server 4173` desde la raíz y abre `http://127.0.0.1:41
 
 El itinerario público está centralizado en `assets/js/data.js`. Las notas, favoritos y la lista de preparación se guardan únicamente en el `localStorage` de cada navegador. No introduzcas códigos de reserva, documentos, pagos, contraseñas ni otros datos sensibles en los archivos versionados.
 
+## Sin conexión y accesibilidad
+
+Tras la primera visita, el service worker conserva la interfaz y los datos authored para uso sin conexión. Las rutas de AMap/Google Maps y enlaces de fuentes requieren red. La interfaz está pensada primero para móvil, conserva focos visibles y reduce las animaciones cuando el sistema lo solicita.
+
 ## Despliegue
 
 Son archivos estáticos compatibles con GitHub Pages. Publica la raíz de esta rama con GitHub Pages cuando estés listo.

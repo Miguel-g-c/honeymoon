@@ -9,6 +9,13 @@ function amapKeyword(location) {
   return location.local || location.name;
 }
 
+function locationCoordinates(location) {
+  const match = String(location.coordinates || '').match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/);
+  if (!match) return null;
+  const [, latitude, longitude] = match;
+  return { latitude, longitude };
+}
+
 export function mapFallbackUrl(location) {
   if (location.region === 'indonesia') return '';
   return `https://uri.amap.com/search?keyword=${encode(amapKeyword(location))}&src=honeymoon&callnative=0`;
@@ -22,8 +29,13 @@ export function mapUrl(location, agent = userAgent()) {
     return `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
   }
   const keyword = amapKeyword(location);
+  const coordinates = locationCoordinates(location);
   // Native schemes are required for a dependable app hand-off. The HTTPS URI's
   // callnative flag is best-effort and is blocked by some mobile browsers/webviews.
+  // Verified accommodation coordinates come from global map links (WGS-84), so
+  // dev=1 asks AMap to apply China's required coordinate-system conversion.
+  if (coordinates && isIOS(agent)) return `iosamap://path?sourceApplication=Honeymoon&dlat=${coordinates.latitude}&dlon=${coordinates.longitude}&dname=${encode(keyword)}&dev=1&t=0`;
+  if (coordinates && isAndroid(agent)) return `amapuri://route/plan/?sourceApplication=Honeymoon&dlat=${coordinates.latitude}&dlon=${coordinates.longitude}&dname=${encode(keyword)}&dev=1&t=0`;
   if (isIOS(agent)) return `iosamap://path?sourceApplication=Honeymoon&dname=${encode(keyword)}&dev=0&t=0`;
   if (isAndroid(agent)) return `androidamap://poi?sourceApplication=Honeymoon&keywords=${encode(keyword)}&dev=0`;
   return mapFallbackUrl(location);

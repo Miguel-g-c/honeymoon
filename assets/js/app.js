@@ -89,6 +89,6 @@ shell.addEventListener('change', event => { if (event.target.matches('[data-chec
 window.addEventListener('hashchange', render);
 window.addEventListener('online', render);
 window.addEventListener('offline', render);
-if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));
+if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js', { updateViaCache:'none' }));
 render();
 void APP_DATA;

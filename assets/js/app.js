@@ -1,5 +1,5 @@
 import { APP_DATA, DAYS, STAYS, RECOMMENDATIONS, KIT, SOURCES } from './data.js';
-import { mapLabel, mapUrl } from './maps.js';
+import { mapFallbackUrl, mapLabel, mapUrl } from './maps.js';
 import { dayHref, parseRoute, routeHref, tripDayForToday } from './router.js';
 import { storage } from './storage.js';
 
@@ -19,7 +19,14 @@ function renderStatus() {
 }
 
 function renderMapAction(location) {
-  return `<a class="button-link button--light" data-online-link href="${mapUrl(location)}" target="_blank" rel="noreferrer">${mapLabel(location)}</a>`;
+  const primary = mapUrl(location);
+  const fallback = mapFallbackUrl(location);
+  const isWebLink = primary.startsWith('http');
+  const webAttributes = isWebLink ? ' target="_blank" rel="noreferrer"' : '';
+  const fallbackAction = fallback && fallback !== primary
+    ? `<a class="source-link" data-online-link href="${fallback}" target="_blank" rel="noreferrer">AMap web</a>`
+    : '';
+  return `<a class="button-link button--light" data-online-link href="${primary}"${webAttributes}>${mapLabel(location)}</a>${fallbackAction}`;
 }
 
 function renderSourceAction(source) {

@@ -1,0 +1,9 @@
+{
+  "name": "Miguel & María · Luna de miel",
+  "short_name": "Luna de miel",
+  "start_url": "./#/",
+  "display": "standalone",
+  "background_color": "#F8F4EB",
+  "theme_color": "#172A2B",
+  "icons": [{ "src": "assets/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

@@ -1,6 +1,6 @@
 const china = 'china';
 const indonesia = 'indonesia';
-const loc = (name, local, address, region = china) => ({ name, local, address, region });
+const loc = (name, local, address, region = china, coordinates = '') => ({ name, local, address, region, coordinates });
 
 export const LOCATIONS = {
   mad: loc('Aeropuerto Adolfo Suárez Madrid-Barajas', 'Aeropuerto de Madrid', 'Madrid, España', indonesia),
@@ -33,22 +33,29 @@ export const LOCATIONS = {
   disney: loc('Shanghai Disneyland', '上海迪士尼度假区', 'Shanghai Disney Resort, Pudong, Shanghai'),
   bund: loc('El Bund', '外滩', 'The Bund, Huangpu, Shanghai'),
   jadeBuddha: loc('Templo del Buda de Jade', '玉佛禅寺', 'Jade Buddha Temple, Jing’an, Shanghai'),
-  purnama: loc('Purnama House Kuta', 'Purnama House Kuta', '-8.7404, 115.1708', indonesia),
-  wilsons: loc('Wilson’s Retreat', 'Wilson’s Retreat', '-8.3493, 116.0375', indonesia),
-  anja: loc('Anja Jimbaran', 'Anja Jimbaran', '-8.7702, 115.1682', indonesia),
+  sunworld: loc('Sunworld Dynasty Hotel Beijing Wangfujing', '北京王府井大饭店', '50 Wangfujing Avenue, Dongcheng, Beijing'),
+  yurealm: loc('Zhangjiajie Yu Realm Hotel', '张家界裕润酒店', 'No. 200 Jundi Road, Wulingyuan, Zhangjiajie'),
+  huaqianshu: loc('Huaqianshu Theme Inn', '花千树主题客栈', 'No. 14 Zoumaping, Furong Town/Wangcun'),
+  fenghuangResort: loc('Phoenix Misty Rain Cloud Resort', '烟雨云兮度假酒店', 'Phoenix Building, No. 1 Phoenix South Road, Fenghuang'),
+  yunshang: loc('Yunshang Chenxi Wisdom Homestay', '云上晨曦智慧民宿', 'No. 240, Group 1, Tiantouzhai, Dazhai Village, Longji'),
+  yangshuoResort: loc('Yangshuo Li River Resort', '阳朔漓江度假酒店', '#1 Shuangtan Village, Yangshuo'),
+  elong: loc('Shanghai Elong Hotel by the Bund and Nanjing Road', '上海艺龙酒店', 'No. 595 Jiujiang Road, Huangpu, Shanghai'),
+  purnama: loc('Purnama House Kuta', 'Purnama House Kuta', 'Jalan Puri Grenceng Gang Mangga No. 1, Tuban, 80361 Kuta, Indonesia', indonesia, '-8.7404, 115.1708'),
+  wilsons: loc('Wilson’s Retreat', 'Wilson’s Retreat', 'North Beach Gili Trawangan, Desa Gili Indah, Pemenang, Lombok Utara, 83352, Indonesia', indonesia, '-8.33947, 116.035029'),
+  anja: loc('Anja Jimbaran', 'Anja Jimbaran', 'Jl. Yoga Perkanthi No. 2, Jimbaran, Badung, Bali 80361, Indonesia', indonesia, '-8.772494, 115.169245'),
 };
 
 export const STAYS = [
-  { id:'sunworld', name:'Sunworld Dynasty Hotel Beijing Wangfujing', local:'北京王府井大饭店', address:'50 Wangfujing Avenue, Dongcheng, Beijing', dates:'31 ago — 3 sep', location:loc('Sunworld Dynasty Hotel Beijing Wangfujing','北京王府井大饭店','50 Wangfujing Avenue, Dongcheng, Beijing') },
-  { id:'yurealm', name:'Zhangjiajie Yu Realm Hotel', local:'张家界裕润酒店', address:'No. 200 Jundi Road, Wulingyuan, Zhangjiajie', dates:'3 — 6 sep', location:loc('Zhangjiajie Yu Realm Hotel','张家界裕润酒店','No. 200 Jundi Road, Wulingyuan, Zhangjiajie') },
-  { id:'huaqianshu', name:'Huaqianshu Theme Inn', local:'花千树主题客栈', address:'No. 14 Zoumaping, Furong Town/Wangcun', dates:'6 — 7 sep', location:loc('Huaqianshu Theme Inn','花千树主题客栈','No. 14 Zoumaping, Furong Town/Wangcun') },
-  { id:'fenghuang', name:'Phoenix Misty Rain Cloud Resort (vicinity)', local:'烟雨云兮度假酒店附近', address:'Phoenix Building, No. 1 Phoenix South Road, Fenghuang', dates:'7 — 8 sep', location:loc('Phoenix Misty Rain Cloud Resort','烟雨云兮度假酒店','Phoenix Building, No. 1 Phoenix South Road, Fenghuang') },
-  { id:'yunshang', name:'Yunshang Chenxi Wisdom Homestay', local:'云上晨曦智慧民宿', address:'No. 240, Group 1, Tiantouzhai, Dazhai Village, Longji', dates:'8 — 9 sep', location:loc('Yunshang Chenxi Wisdom Homestay','云上晨曦智慧民宿','No. 240, Group 1, Tiantouzhai, Dazhai Village, Longji') },
-  { id:'yangshuo', name:'Yangshuo Li River Resort', local:'阳朔漓江度假酒店', address:'#1 Shuangtan Village, Yangshuo', dates:'9 — 11 sep', location:loc('Yangshuo Li River Resort','阳朔漓江度假酒店','#1 Shuangtan Village, Yangshuo') },
-  { id:'elong', name:'Shanghai Elong Hotel by the Bund and Nanjing Road', local:'上海艺龙酒店', address:'No. 595 Jiujiang Road, Huangpu, Shanghai', dates:'11 — 15 sep', location:loc('Shanghai Elong Hotel','上海艺龙酒店','No. 595 Jiujiang Road, Huangpu, Shanghai') },
-  { id:'purnama', name:'Purnama House Kuta', local:'Purnama House Kuta', address:'Jalan Puri Grenceng Gang Mangga No. 1, Tuban/Kuta', dates:'15 — 16 sep', location:LOCATIONS.purnama },
-  { id:'wilsons', name:'Wilson’s Retreat', local:'Wilson’s Retreat', address:'North Beach, Gili Trawangan', dates:'16 — 19 sep', location:LOCATIONS.wilsons },
-  { id:'anja', name:'Anja Jimbaran', local:'Anja Jimbaran', address:'Jl. Yoga Perkanthi No. 2, Jimbaran', dates:'19 — 20 sep', location:LOCATIONS.anja },
+  { id:'sunworld', dates:'31 ago — 3 sep', location:LOCATIONS.sunworld },
+  { id:'yurealm', dates:'3 — 6 sep', location:LOCATIONS.yurealm },
+  { id:'huaqianshu', dates:'6 — 7 sep', location:LOCATIONS.huaqianshu },
+  { id:'fenghuang', dates:'7 — 8 sep', location:LOCATIONS.fenghuangResort },
+  { id:'yunshang', dates:'8 — 9 sep', location:LOCATIONS.yunshang },
+  { id:'yangshuo', dates:'9 — 11 sep', location:LOCATIONS.yangshuoResort },
+  { id:'elong', dates:'11 — 15 sep', location:LOCATIONS.elong },
+  { id:'purnama', dates:'15 — 16 sep', location:LOCATIONS.purnama },
+  { id:'wilsons', dates:'16 — 19 sep', location:LOCATIONS.wilsons },
+  { id:'anja', dates:'19 — 20 sep', location:LOCATIONS.anja },
 ];
 
 const event = (time, icon, action, location, note = '', status = '') => ({ time, icon, action, location, note, status });
